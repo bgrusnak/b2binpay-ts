@@ -1,7 +1,7 @@
 {
-  "name": "@bgrusnak/b2broker-ts",
+  "name": "@bgrusnak/b2binpay-ts",
   "version": "0.0.1",
-  "description": "B2Broker Typescript server library",
+  "description": "B2BInPay Typescript server library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,19 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bgrusnak/b2broker-ts.git"
+    "url": "git+https://github.com/bgrusnak/b2binpay-ts.git"
   },
   "author": "Ilya A.Shlyakhovoy",
   "license": "MIT",
   "keywords": [
     "b2broker",
+    "b2binpay",
     "ts",
     "typescipt"
   ],
   "bugs": {
-    "url": "https://github.com/bgrusnak/b2broker-ts/issues"
+    "url": "https://github.com/bgrusnak/b2binpay-ts/issues"
   },
-  "homepage": "https://github.com/bgrusnak/b2broker-ts#readme",
+  "homepage": "https://github.com/bgrusnak/b2binpay-ts#readme",
   "dependencies": {
     "axios": "^0.24.0"
   },
