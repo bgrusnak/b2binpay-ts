@@ -1,2 +1,2 @@
-# b2broker-ts
-B2Broker TypeScript library
+# b2binpay-ts
+B2BInPay TypeScript library
