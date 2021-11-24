@@ -1,5 +1,5 @@
 {
-  "name": "b2broker-ts",
+  "name": "@bgrusnak/b2broker-ts",
   "version": "0.0.1",
   "description": "B2Broker Typescript server library",
   "main": "dist/index.js",
@@ -38,5 +38,8 @@
     "mocha": "^9.1.3",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
