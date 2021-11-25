@@ -18,12 +18,6 @@ export default class B2BInPay {
   secret: string;
   testMode: boolean;
   is_connected: boolean = false;
-  /*   access: string;
-  refresh: string;
-  access_expired_at: string;
-  refresh_expired_at: string;
-  is_2fa_confirmed: boolean;
-  meta?: B2BrokerMeta; */
   private sock: AxiosInstance;
   private token: string;
   private lifeTime: string;
