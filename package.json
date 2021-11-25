@@ -8,7 +8,8 @@
     "/dist"
   ],
   "scripts": {
-    "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register --extension=ts --timeout 10000"
+    "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register --extension=ts --timeout 10000",
+    "publish": "npx tsc && npm publish"
   },
   "repository": {
     "type": "git",
