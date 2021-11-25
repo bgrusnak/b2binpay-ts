@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import { TEST_KEY, TEST_SECRET } from '../src/constants';
-import B2BInPay from '../src/b2binpay';
+import B2BInPay from '../src';
 describe('Connect', function() {
   describe('Test connect to the b2inpay', function() {
     it('should connect with test values', async function() {

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import { TEST_KEY, TEST_SECRET } from '../src/constants';
-import B2BInPay from '../src/b2binpay';
+import B2BInPay from '../src';
 describe('Bill', function() {
   describe('Test of the deposit quotations', function() {
     it('should get the deposit quotations', async function() {
