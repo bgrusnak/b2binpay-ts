@@ -1,6 +1,6 @@
 {
   "name": "@bgrusnak/b2binpay-ts",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "B2BInPay Typescript server library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register --extension=ts --timeout 10000",
-    "publish": "npx tsc && npm publish"
+    "compile": "npx tsc"
   },
   "repository": {
     "type": "git",
