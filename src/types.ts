@@ -25,7 +25,7 @@ export type TB2BInPayLogin = {
 };
 
 export type TB2BInPayOrder = {
-  amount: number;
+  amount: string;
   wallet: string;
   tracking_id?: number | string;
   lifetime?: number;
@@ -47,8 +47,8 @@ export type TB2BInPayBillData = {
   expired: string;
   status: EBillStatus;
   tracking_id?: number | string;
-  amount: number | string;
-  actual_amount: number | string;
+  amount: string;
+  actual_amount: string;
   pow: number;
   transactions: any[];
   message?: any;
@@ -63,7 +63,7 @@ export type TB2BInPayCurrency = {
 export type TB2BInPayQuote = {
   from: TB2BInPayCurrency;
   to: TB2BInPayCurrency;
-  rate: string | number;
+  rate: string;
   pow: number;
   expire: string;
 };
@@ -73,12 +73,12 @@ export type TB2BInPayQuoteList = {
 };
 
 export type TB2BInPayWithdrawRequest = {
-  amount: number;
+  amount: string;
   virtual_wallet_id: number | string;
   address: string;
   currency: string;
   unique_id: number;
-  tracking_id?: number | string;
+  tracking_id?:   string;
   pow?: number;
   callback_url?: string;
   message?: string;
@@ -93,7 +93,7 @@ export type TB2BInPayWithdrawData = {
   callback_url?: string;
   status: EBillStatus;
   tracking_id?: number | string;
-  amount: number | string;
+  amount: string;
   pow: number;
   currency: TB2BInPayCurrency;
 };

@@ -35,14 +35,19 @@ export default class B2BInPay {
   async connect(key: string, secret: string): Promise<boolean> {
     const baseURL = this.testMode ? SANDBOX : GATEWAY;
     if (!key.length || !secret.length) throw new Error('No connection data');
+    try {
     const answer = await this.sock.get<TB2BInPayLogin>(`${baseURL}/login`, {
       headers: {
         Authorization: 'Basic ' + Buffer.from(`${key}:${secret}`).toString('base64')
       }
-    });
+    })
     this.token = answer.data.access_token;
     this.lifeTime = answer.data.lifetime;
     this.is_connected = true;
+  } catch(e) {
+    this.is_connected = false;
+    return false;
+  };
     return true;
   }
 
