@@ -1,6 +1,6 @@
 {
   "name": "@bgrusnak/b2binpay-ts",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "B2BInPay Typescript server library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
