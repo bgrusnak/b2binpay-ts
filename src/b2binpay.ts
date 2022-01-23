@@ -177,25 +177,25 @@ export default class B2BInPay {
     return await this.get<TBIPDeposit>(`deposit/${id}`);
   }
 
-  async createDeposit(
-    wallet: TBIPWalletItem,
-    label: string,
-    trackingId: number | string,
-    addressType: EBIPPaymentAddressType,
-    callbackUrl: string,
-    confirmationsNeeded: number | null
-  ): Promise<TBIPDeposit> {
+  async createDeposit(req: {
+    wallet: TBIPWalletItem;
+    label?: string;
+    trackingId?: number | string;
+    addressType?: EBIPPaymentAddressType;
+    callbackUrl?: string;
+    confirmationsNeeded?: number | null;
+  }): Promise<TBIPDeposit> {
     return await this.post<TBIPDeposit>(`deposit`, {
       type: 'deposit',
       attributes: {
-        label,
-        address_type: addressType,
-        tracking_id: trackingId,
-        confirmations_needed: confirmationsNeeded,
-        callback_url: callbackUrl
+        label: req.label,
+        address_type: req.addressType,
+        tracking_id: req.trackingId,
+        confirmations_needed: req.confirmationsNeeded,
+        callback_url: req.callbackUrl
       },
       relationships: {
-        wallet
+        wallet: req.wallet
       }
     });
   }
@@ -204,27 +204,27 @@ export default class B2BInPay {
     return await this.get<TBIPInvoice>(`invoice/${id}`);
   }
 
-  async createInvoice(
-    wallet: TBIPWalletItem,
-    label: string,
-    trackingId: number | string,
-    addressType: EBIPPaymentAddressType,
-    callbackUrl: string,
-    currency: TBIPCurrencyItem,
-    confirmationsNeeded: number | null
-  ): Promise<TBIPInvoice> {
+  async createInvoice(req: {
+    wallet: TBIPWalletItem;
+    label?: string;
+    trackingId?: number | string;
+    addressType?: EBIPPaymentAddressType;
+    callbackUrl?: string;
+    currency?: TBIPCurrencyItem;
+    confirmationsNeeded?: number | null;
+  }): Promise<TBIPInvoice> {
     return await this.post<TBIPInvoice>(`invoice`, {
       type: 'invoice',
       attributes: {
-        label,
-        address_type: addressType,
-        tracking_id: trackingId,
-        confirmations_needed: confirmationsNeeded,
-        callback_url: callbackUrl
+        label: req.label,
+        address_type: req.addressType,
+        tracking_id: req.trackingId,
+        confirmations_needed: req.confirmationsNeeded,
+        callback_url: req.callbackUrl
       },
       relationships: {
-        wallet,
-        currency
+        wallet: req.wallet,
+        currency: req.currency
       }
     });
   }
@@ -233,31 +233,31 @@ export default class B2BInPay {
     return await this.get<TBIPPayout>(`payout/${id}`);
   }
 
-  async createPayout(
-    wallet: TBIPWalletItem,
-    label: string,
-    trackingId: number | string,
-    address: string,
-    amount: string,
-    addressType: EBIPPaymentAddressType,
-    callbackUrl: string,
-    currency: TBIPCurrencyItem,
-    confirmationsNeeded: number | null
-  ): Promise<TBIPPayout> {
+  async createPayout(req: {
+    wallet: TBIPWalletItem;
+    label?: string;
+    trackingId?: number | string;
+    address?: string;
+    amount?: string;
+    addressType?: EBIPPaymentAddressType;
+    callbackUrl?: string;
+    currency?: TBIPCurrencyItem;
+    confirmationsNeeded?: number | null;
+  }): Promise<TBIPPayout> {
     return await this.post<TBIPPayout>(`payout`, {
       type: 'payout',
       attributes: {
-        label,
-        address,
-        amount,
-        address_type: addressType,
-        tracking_id: trackingId,
-        confirmations_needed: confirmationsNeeded,
-        callback_url: callbackUrl
+        label: req.label,
+        address: req.address,
+        amount: req.amount,
+        address_type: req.addressType,
+        tracking_id: req.trackingId,
+        confirmations_needed: req.confirmationsNeeded,
+        callback_url: req.callbackUrl
       },
       relationships: {
-        wallet,
-        currency
+        wallet: req.wallet,
+        currency: req.currency
       }
     });
   }
