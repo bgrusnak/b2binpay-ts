@@ -17,7 +17,8 @@ import {
 } from './types';
 import axios, { AxiosInstance } from 'axios';
 import * as moment from 'moment';
-import CryptoES from 'crypto-es';
+import * as SHA256 from 'crypto-js/sha256';
+import * as HmacSHA256 from 'crypto-js/hmac-sha256';
 import { GATEWAY, SANDBOX } from './constants';
 
 export default class B2BInPay {
@@ -63,8 +64,8 @@ export default class B2BInPay {
       this.is2faConfirmed = data.data.attributes.is_2fa_confirmed;
       const message = data.meta.time + data.data.attributes.refresh;
       const responseSign = data.meta.sign;
-      const crypted = await CryptoES.SHA256(key + secretString);
-      const calculatedSign = CryptoES.HmacSHA256(message, crypted).toString();
+      const crypted = await SHA256(key + secretString);
+      const calculatedSign = HmacSHA256(message, crypted).toString();
       if (responseSign !== calculatedSign) {
         return false;
       }
