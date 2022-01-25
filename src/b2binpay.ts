@@ -25,8 +25,7 @@ export default class B2BInPay {
   key: string;
   secret: string;
   testMode: boolean;
-  baseURL: string;
-  is_connected: boolean = false;
+  isConnected: boolean = false;
   private sock: AxiosInstance;
   private accessToken: string;
   private refreshToken: string;
@@ -38,27 +37,28 @@ export default class B2BInPay {
     this.key = options && options.key;
     this.secret = options && options.secret;
     this.testMode = (options && options.testMode) || false;
-    this.baseURL = this.testMode ? SANDBOX : GATEWAY;
-    this.sock = axios.create();
+    this.sock = axios.create({
+      baseURL: this.testMode ? SANDBOX : GATEWAY,
+      headers: { 'Content-Type': 'application/vnd.api+json' }
+    });
     this.refresh();
   }
 
   async connect(key: string, secretString: string): Promise<boolean> {
     if (!key.length || !secretString.length) throw new Error('No connection data');
     try {
-      const { data } = await this.sock.post<TBIPToken>(`${this.baseURL}/token/`, {
+      const { data } = await this.sock.post<TBIPToken>(`/token/`, {
         data: {
-          data: {
-            type: 'auth-token',
-            attributes: {
-              login: key,
-              password: secretString
-            }
+          type: 'auth-token',
+          attributes: {
+            login: key,
+            password: secretString
           }
         }
       });
       this.accessToken = data.data.attributes.access;
       this.refreshToken = data.data.attributes.refresh;
+      this.sock.defaults.headers.common['Authorization'] = 'Bearer ' + this.accessToken;
       this.accessExpiredAt = moment(data.data.attributes.access_expired_at).toDate();
       this.refreshExpiredAt = moment(data.data.attributes.refresh_expired_at).toDate();
       this.is2faConfirmed = data.data.attributes.is_2fa_confirmed;
@@ -69,16 +69,17 @@ export default class B2BInPay {
       if (responseSign !== calculatedSign) {
         return false;
       }
-      this.is_connected = true;
+      this.isConnected = true;
     } catch (e) {
-      this.is_connected = false;
+      console.log(e);
+      this.isConnected = false;
       return false;
     }
     return true;
   }
 
   private async validateConnect(): Promise<boolean> {
-    if (!this.is_connected) {
+    if (!this.isConnected) {
       if (this.key && this.key.length && this.secret && this.secret.length) {
         return await this.connect(this.key, this.secret);
       }
@@ -94,23 +95,22 @@ export default class B2BInPay {
       return;
     }
     try {
-      const { data } = await this.sock.post<TBIPRefresh>(`${this.baseURL}/token/refresh/`, {
+      const { data } = await this.sock.post<TBIPRefresh>(`/token/refresh/`, {
         data: {
-          data: {
-            type: 'auth-token',
-            attributes: {
-              refresh: this.refreshToken
-            }
+          type: 'auth-token',
+          attributes: {
+            refresh: this.refreshToken
           }
         }
       });
       this.accessToken = data.data.attributes.access;
       this.refreshToken = data.data.attributes.refresh;
+      this.sock.defaults.headers.common['Authorization'] = 'Bearer ' + this.accessToken;
       this.accessExpiredAt = moment(data.data.attributes.access_expired_at).toDate();
       this.refreshExpiredAt = moment(data.data.attributes.refresh_expired_at).toDate();
       this.is2faConfirmed = data.data.attributes.is_2fa_confirmed;
     } catch (e) {
-      this.is_connected = false;
+      this.isConnected = false;
     }
   }
 
@@ -120,18 +120,17 @@ export default class B2BInPay {
     }
     if (moment().isAfter(this.accessExpiredAt)) {
       await this.refresh();
-      if (!this.is_connected) {
+      if (!this.isConnected) {
         throw new Error(`Not connected`);
       }
     }
-    const { data } = await this.sock[method]<T>(`${this.baseURL}/${path}`, {
-      data: params,
-      headers: {
-        Authorization: 'Bearer ' + this.accessToken,
-        'Content-Type': 'application/vnd.api+json'
-      }
-    });
-    return data;
+    try {
+      const { data } = await this.sock[method]<T>(`/${path}`, { data: params });
+      return data;
+    } catch (e) {
+      console.log(e);
+      return undefined;
+    }
   }
 
   async get<T>(path: string, params?: object): Promise<T> {
