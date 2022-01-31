@@ -213,8 +213,8 @@ export default class B2BInPay {
     currency?: TBIPCurrencyItem;
     confirmationsNeeded?: number | null;
   }): Promise<TBIPInvoice> {
-    return await this.post<TBIPInvoice>(`invoice`, {
-      type: 'invoice',
+    return await this.post<TBIPInvoice>(`deposit`, {
+      type: 'deposit',
       attributes: {
         label: req.label,
         address_type: req.addressType,
