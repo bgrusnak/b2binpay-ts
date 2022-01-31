@@ -240,7 +240,7 @@ export type TBIPDeposit = {
 
 export type TBIPInvoice = {
   data: {
-    type: 'invoice';
+    type: 'deposit';
     id: number;
     attributes: {
       target_paid: string;

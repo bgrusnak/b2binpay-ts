@@ -201,7 +201,7 @@ export default class B2BInPay {
   }
 
   async getInvoice(id: number | string): Promise<TBIPInvoice> {
-    return await this.get<TBIPInvoice>(`invoice/${id}`);
+    return await this.get<TBIPInvoice>(`deposit/${id}`);
   }
 
   async createInvoice(req: {
