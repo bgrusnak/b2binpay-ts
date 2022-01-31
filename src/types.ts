@@ -94,22 +94,20 @@ export type TBIPCurrencyItem = {
 };
 
 export type TBIPWallet = {
-  data: {
-    type: 'wallet';
-    id: number;
-    attributes: {
-      status: EBIPWalletStatus;
-      created_at: Date;
-      balance_confirmed: Number;
-      balance_pending: Number;
-      balance_unusable: Number;
-      minimal_transfer_amount: Number;
-      destination: TBIPWalletDestination | undefined | null;
-    };
-    relationships: {
-      currency: TBIPCurrencyItem;
-      parent: TBIPWalletItem | undefined | null;
-    };
+  type: 'wallet';
+  id: number;
+  attributes: {
+    status: EBIPWalletStatus;
+    created_at: Date;
+    balance_confirmed: Number;
+    balance_pending: Number;
+    balance_unusable: Number;
+    minimal_transfer_amount: Number;
+    destination: TBIPWalletDestination | undefined | null;
+  };
+  relationships: {
+    currency: TBIPCurrencyItem;
+    parent: TBIPWalletItem | undefined | null;
   };
 };
 
@@ -142,46 +140,42 @@ export enum EBIPTransferStatus {
 }
 
 export type TBIPTransfer = {
-  data: {
-    type: 'transfer';
-    id: number;
-    attributes: {
-      confirmations: number;
-      op_id: number;
-      op_type: EBIPTransferType;
-      risk_status: EBIPTransferRisk;
-      risk: number | null;
-      amount: string;
-      commission: string;
-      fee: string;
-      txid: string;
-      status: EBIPTransferStatus;
-      message: string | null;
-      user_message: string | null;
-      created_at: Date;
-      updated_at: Date;
-    };
-    relationships: {
-      currency: TBIPCurrencyItem;
-      wallet: TBIPWalletItem;
-      parent: object | null;
-    };
+  type: 'transfer';
+  id: number;
+  attributes: {
+    confirmations: number;
+    op_id: number;
+    op_type: EBIPTransferType;
+    risk_status: EBIPTransferRisk;
+    risk: number | null;
+    amount: string;
+    commission: string;
+    fee: string;
+    txid: string;
+    status: EBIPTransferStatus;
+    message: string | null;
+    user_message: string | null;
+    created_at: Date;
+    updated_at: Date;
+  };
+  relationships: {
+    currency: TBIPCurrencyItem;
+    wallet: TBIPWalletItem;
+    parent: object | null;
   };
 };
 
 export type TBIPRate = {
-  data: {
-    type: 'rate';
-    id: number;
-    attributes: {
-      left: string;
-      right: string;
-      bid: string;
-      ask: string;
-      exp: number;
-      expired_at: Date;
-      created_at: Date;
-    };
+  type: 'rate';
+  id: number;
+  attributes: {
+    left: string;
+    right: string;
+    bid: string;
+    ask: string;
+    exp: number;
+    expired_at: Date;
+    created_at: Date;
   };
 };
 
@@ -214,52 +208,48 @@ export type TBIPDepositCurrency = {
 };
 
 export type TBIPDeposit = {
-  data: {
-    type: 'deposit';
-    id: number;
-    attributes: {
-      target_paid: string;
-      payment_page: string;
-      address_type: EBIPPaymentAddressType;
-      tracking_id: string | number;
-      confirmations_needed: null | number;
-      callback_url: string;
-      address: string;
-      message: null | string;
-      destination: TBIPAddressDestination;
-      assets: {
-        [index: string]: TBIPDepositCurrency;
-      };
+  type: 'deposit';
+  id: number;
+  attributes: {
+    target_paid: string;
+    payment_page: string;
+    address_type: EBIPPaymentAddressType;
+    tracking_id: string | number;
+    confirmations_needed: null | number;
+    callback_url: string;
+    address: string;
+    message: null | string;
+    destination: TBIPAddressDestination;
+    assets: {
+      [index: string]: TBIPDepositCurrency;
     };
-    relationships: {
-      currency: TBIPCurrencyItem;
-      wallet: TBIPWalletItem;
-    };
+  };
+  relationships: {
+    currency: TBIPCurrencyItem;
+    wallet: TBIPWalletItem;
   };
 };
 
 export type TBIPInvoice = {
-  data: {
-    type: 'deposit';
-    id: number;
-    attributes: {
-      target_paid: string;
-      payment_page: string;
-      address: string;
-      destination: TBIPAddressDestination;
-      label: string;
-      tracking_id: string | number;
-      address_type: EBIPPaymentAddressType;
-      confirmations_needed: null | number;
-      callback_url: string;
-      rate_requested: string;
-      rate_expired_at: Date;
-      invoice_updated_at: Date;
-    };
-    relationships: {
-      currency: TBIPCurrencyItem;
-      wallet: TBIPWalletItem;
-    };
+  type: 'deposit';
+  id: number;
+  attributes: {
+    target_paid: string;
+    payment_page: string;
+    address: string;
+    destination: TBIPAddressDestination;
+    label: string;
+    tracking_id: string | number;
+    address_type: EBIPPaymentAddressType;
+    confirmations_needed: null | number;
+    callback_url: string;
+    rate_requested: string;
+    rate_expired_at: Date;
+    invoice_updated_at: Date;
+  };
+  relationships: {
+    currency: TBIPCurrencyItem;
+    wallet: TBIPWalletItem;
   };
 };
 
@@ -269,48 +259,44 @@ export enum EBIPPayoutStatus {
 }
 
 export type TBIPPayout = {
-  data: {
-    type: 'payout';
-    id: number;
-    attributes: {
-      amount: string;
-      exp: number;
-      tag: string | null;
-      tag_type: string | null;
-      destination: TBIPAddressDestination;
-      tracking_id: string | number | null;
-      confirmations_needed: null | number;
-      fee_amount: string;
-      is_fee_included: boolean;
-      message: string | null;
-      status: EBIPPayoutStatus;
-      callback_url: string;
-    };
-    relationships: {
-      currency: TBIPCurrencyItem;
-      wallet: TBIPWalletItem;
-    };
-    links: { [index: string]: string };
+  type: 'payout';
+  id: number;
+  attributes: {
+    amount: string;
+    exp: number;
+    tag: string | null;
+    tag_type: string | null;
+    destination: TBIPAddressDestination;
+    tracking_id: string | number | null;
+    confirmations_needed: null | number;
+    fee_amount: string;
+    is_fee_included: boolean;
+    message: string | null;
+    status: EBIPPayoutStatus;
+    callback_url: string;
   };
+  relationships: {
+    currency: TBIPCurrencyItem;
+    wallet: TBIPWalletItem;
+  };
+  links: { [index: string]: string };
 };
 
 export type TBIPFee = {
-  data: {
-    type: "payout-calculation";
-    id: number|string;
-    attributes: {
-      is_internal: boolean;
-      fee: {
-        low: string;
-        medium: string;
-        high: string;
-        dust_amount: string;
-        currency: number;
-      },
-      commission: {
-        amount: string;
-        currency: number;
-      }
-    }
-  }
-}
+  type: 'payout-calculation';
+  id: number | string;
+  attributes: {
+    is_internal: boolean;
+    fee: {
+      low: string;
+      medium: string;
+      high: string;
+      dust_amount: string;
+      currency: number;
+    };
+    commission: {
+      amount: string;
+      currency: number;
+    };
+  };
+};

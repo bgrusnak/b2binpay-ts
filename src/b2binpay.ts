@@ -142,12 +142,13 @@ export default class B2BInPay {
   }
 
   async getWallets(): Promise<TBIPWallet[]> {
-    const {data} = await this.get<{data: TBIPWallet[]}>('wallet');
+    const { data } = await this.get<{ data: TBIPWallet[] }>('wallet');
     return data;
   }
 
   async getWallet(id: number | string): Promise<TBIPWallet> {
-    return await this.get<TBIPWallet>(`wallet/${id}`);
+    const { data } = await this.get<{ data: TBIPWallet }>(`wallet/${id}`);
+    return data;
   }
 
   async getCurrency(id: number | string): Promise<TBIPCurrency> {
@@ -155,19 +156,20 @@ export default class B2BInPay {
   }
 
   async getTransfer(id: number | string): Promise<TBIPTransfer> {
-    return await this.get<TBIPTransfer>(`transfer/${id}`);
+    const { data } = await this.get<{ data: TBIPTransfer }>(`transfer/${id}`);
+    return data;
   }
 
   async getTransfers(fields: object): Promise<TBIPTransfer | TBIPTransfer[]> {
-    const ret = await this.get<TBIPTransfer | {data: TBIPTransfer[]}>(`transfer`, fields);
-    const single = (toBeDetermined: TBIPTransfer | {data: TBIPTransfer[]}): toBeDetermined is TBIPTransfer  => {
-      if((toBeDetermined as TBIPTransfer).data){
-        return true
+    const { data } = await this.get<{ data: TBIPTransfer | TBIPTransfer[] }>(`transfer`, fields);
+    const single = (toBeDetermined: TBIPTransfer | TBIPTransfer[]): toBeDetermined is TBIPTransfer => {
+      if ((toBeDetermined as TBIPTransfer).type) {
+        return true;
       }
-      return false
+      return false;
     };
-    if (single) return ret as TBIPTransfer;
-    return ret.data as TBIPTransfer[];
+    if (single(data)) return data as TBIPTransfer;
+    return data as TBIPTransfer[];
   }
 
   async getRates(filter: TBIPRateFilter): Promise<TBIPRate | TBIPRate[]> {
@@ -179,19 +181,20 @@ export default class B2BInPay {
       const frt = `filter[right]=${filter.left}`;
       filterText = filterText.length ? filterText + '&' + frt : frt;
     }
-    const ret = await this.get<TBIPRate |  {data:TBIPRate[]}>(`rates/?${filterText}`);
-    const single = (toBeDetermined: TBIPRate |  {data:TBIPRate[]}): toBeDetermined is TBIPRate  => {
-      if((toBeDetermined as TBIPRate).data){
-        return true
+    const { data } = await this.get<{ data: TBIPRate | TBIPRate[] }>(`rates/?${filterText}`);
+    const single = (toBeDetermined: TBIPRate | TBIPRate[]): toBeDetermined is TBIPRate => {
+      if ((toBeDetermined as TBIPRate).type) {
+        return true;
       }
-      return false
+      return false;
     };
-    if (single) return ret as TBIPRate;
-    return ret.data as TBIPRate[];
+    if (single(data)) return data as TBIPRate;
+    return data as TBIPRate[];
   }
 
   async getDeposit(id: number | string): Promise<TBIPDeposit> {
-    return await this.get<TBIPDeposit>(`deposit/${id}`);
+    const { data } = await this.get<{ data: TBIPDeposit }>(`deposit/${id}`);
+    return data;
   }
 
   async createDeposit(req: {
@@ -202,7 +205,7 @@ export default class B2BInPay {
     callbackUrl?: string;
     confirmationsNeeded?: number | null;
   }): Promise<TBIPDeposit> {
-    return await this.post<TBIPDeposit>(`deposit`, {
+    const { data } = await this.post<{ data: TBIPDeposit }>(`deposit`, {
       type: 'deposit',
       attributes: {
         label: req.label,
@@ -215,10 +218,12 @@ export default class B2BInPay {
         wallet: req.wallet
       }
     });
+    return data;
   }
 
   async getInvoice(id: number | string): Promise<TBIPInvoice> {
-    return await this.get<TBIPInvoice>(`deposit/${id}`);
+    const { data } = await this.get<{ data: TBIPInvoice }>(`deposit/${id}`);
+    return data;
   }
 
   async createInvoice(req: {
@@ -230,7 +235,7 @@ export default class B2BInPay {
     currency?: TBIPCurrencyItem;
     confirmationsNeeded?: number | null;
   }): Promise<TBIPInvoice> {
-    return await this.post<TBIPInvoice>(`deposit`, {
+    const { data } = await this.post<{ data: TBIPInvoice }>(`deposit`, {
       type: 'deposit',
       attributes: {
         label: req.label,
@@ -244,10 +249,12 @@ export default class B2BInPay {
         currency: req.currency
       }
     });
+    return data;
   }
 
   async getPayout(id: number | string): Promise<TBIPPayout> {
-    return await this.get<TBIPPayout>(`payout/${id}`);
+    const { data } = await this.get<{ data: TBIPPayout }>(`payout/${id}`);
+    return data;
   }
 
   async createPayout(req: {
@@ -261,7 +268,7 @@ export default class B2BInPay {
     currency?: TBIPCurrencyItem;
     confirmationsNeeded?: number | null;
   }): Promise<TBIPPayout> {
-    return await this.post<TBIPPayout>(`payout`, {
+    const { data } = await this.post<{ data: TBIPPayout }>(`payout`, {
       type: 'payout',
       attributes: {
         label: req.label,
@@ -277,6 +284,7 @@ export default class B2BInPay {
         currency: req.currency
       }
     });
+    return data;
   }
 
   async payoutFee(
@@ -285,7 +293,7 @@ export default class B2BInPay {
     amount: string,
     currency: TBIPCurrencyItem
   ): Promise<TBIPFee> {
-    return await this.post<TBIPFee>(`payout/calculate`, {
+    const { data } = await this.post<{ data: TBIPFee }>(`payout/calculate`, {
       type: 'payout-calculation',
       attributes: {
         to_address: address,
@@ -296,5 +304,6 @@ export default class B2BInPay {
         currency
       }
     });
+    return data;
   }
 }
