@@ -15,7 +15,7 @@ export type TBillSignature = {
 export type TBIPOptions = {
   key?: string;
   secret?: string;
-  testMode?: boolean;
+  apiUrl?: string;
 };
 
 export type TBIPToken = {

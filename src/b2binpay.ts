@@ -19,7 +19,7 @@ import axios, { AxiosInstance } from 'axios';
 import * as moment from 'moment';
 import * as SHA256 from 'crypto-js/sha256';
 import * as HmacSHA256 from 'crypto-js/hmac-sha256';
-import { GATEWAY, SANDBOX } from './constants';
+import { GATEWAY } from './constants';
 
 export default class B2BInPay {
   key: string;
@@ -36,9 +36,8 @@ export default class B2BInPay {
   constructor(options?: TBIPOptions) {
     this.key = options && options.key;
     this.secret = options && options.secret;
-    this.testMode = (options && options.testMode) || false;
     this.sock = axios.create({
-      baseURL: this.testMode ? SANDBOX : GATEWAY,
+      baseURL: (options && options.apiUrl) || GATEWAY,
       headers: { 'Content-Type': 'application/vnd.api+json' }
     });
     this.refresh();
